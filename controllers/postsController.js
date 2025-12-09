@@ -77,7 +77,23 @@ function destroy(req, res) {
 
     console.log(sql, id);
 
+    connection.query(sql, [id], (err, result) => {
+        if (err) {
+            console.error('Errore DB;', err);
+            return res.status(500).json({
+                error: true,
+                message: err.message
+            });
+        }
 
+        console.log(result);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ erroe: "Post non trovato" });
+        }
+
+        return res.sendStatus(204);
+    });
 
 
     /*
