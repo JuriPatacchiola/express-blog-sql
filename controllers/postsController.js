@@ -1,6 +1,22 @@
 const posts = require("../data/posts");
+const connection = require('../database/bd')
 
 function index(req, res) {
+
+
+    const sql = 'SELECT id, title, content, image FROM posts ORDER BY id DESC';
+    connection.query(sql, (err, result) => {
+        if (err) {
+            console.error('Errore durante il recupero dei post:', err)
+            return res.status(500).json({
+                error: true,
+                message: "Errore durante il recupero dei dati dal database",
+                dbError: err.message
+            });
+        }
+        res.json(posts);
+    })
+    /*
     const { tag } = req.query;
 
     if (tag) {
@@ -10,7 +26,7 @@ function index(req, res) {
         return res.json(filtered);
     }
 
-    res.json(posts);
+    res.json(posts);*/
 }
 
 function show(req, res) {
