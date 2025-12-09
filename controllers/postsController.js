@@ -30,6 +30,16 @@ function index(req, res) {
 }
 
 function show(req, res) {
+
+    const id = Number(req.params.id);
+    const sqlPost = 'SELECT id, title, content, image FORM posts WHERE id = ?';
+    const sqlTags = `
+    SELECT t.label
+    FROM tags t
+    JOIN post_tag pt ON pt.tag_id = t.id
+    WHERE pt. post_id = ?
+    `
+    /*
     const id = parseInt(req.params.id);
     const post = posts.find(p => p.id === id);
 
@@ -38,6 +48,7 @@ function show(req, res) {
     }
 
     res.json(post);
+    */
 }
 
 function store(req, res) {
