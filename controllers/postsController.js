@@ -39,6 +39,36 @@ function show(req, res) {
     JOIN post_tag pt ON pt.tag_id = t.id
     WHERE pt. post_id = ?
     `
+
+    console.log(sqlPost, id);
+
+    connection.query(sqlPost, [id], (err, postRsponce) => {
+        if (err) {
+            console.error('Errore DB (Post):', err);
+            return res.status(500).json({
+                error: true,
+                message: err.message
+            });
+        }
+        if (postRsponce.length === 0) {
+            return res.status(404).json({
+                error: true,
+                message: 'Post non trovato'
+            });
+        }
+
+        const post = postRsponce[0];
+
+        console.log(sqlTags, id)
+
+        console.log(errTags, resTags, post);
+
+        post['tags'] = resTags.map(tag => tag.label);
+
+
+        res.json(post);
+    });
+
     /*
     const id = parseInt(req.params.id);
     const post = posts.find(p => p.id === id);
