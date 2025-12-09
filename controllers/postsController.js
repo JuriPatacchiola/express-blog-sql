@@ -71,6 +71,16 @@ function update(req, res) {
 }
 
 function destroy(req, res) {
+
+    const id = Number(req.params.id);
+    const sql = 'DELATE FROM posts WHERE id = ?';
+
+    console.log(sql, id);
+
+
+
+
+    /*
     const id = parseInt(req.params.id);
     const index = posts.findIndex(p => p.id === id);
 
@@ -81,6 +91,7 @@ function destroy(req, res) {
     posts.splice(index, 1);
 
     res.status(204).send();
+    */
 }
 
 module.exports = {
